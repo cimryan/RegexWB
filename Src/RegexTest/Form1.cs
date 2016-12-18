@@ -1591,11 +1591,9 @@ namespace RegexTest
 				{
 					try
 					{
-						SoapFormatter soapRead = new SoapFormatter();
-						Settings settings = 
-							(Settings) soapRead.Deserialize(streamRead);
+						Settings settings = DeserializeSettings(streamRead);
 
-						RegexText.Text = settings.RegexText;
+					    RegexText.Text = settings.RegexText;
 						Strings.Text = settings.Strings;
 						IgnoreWhitespace.Checked = settings.IgnoreWhitespace;
 						IgnoreCase.Checked = settings.IgnoreCase;
@@ -1621,7 +1619,16 @@ namespace RegexTest
 				return;
 			}
 		}
-		#endregion
+
+	    static Settings DeserializeSettings(FileStream streamRead)
+	    {
+	        SoapFormatter soapRead = new SoapFormatter();
+	        Settings settings =
+	            (Settings) soapRead.Deserialize(streamRead);
+	        return settings;
+	    }
+
+	    #endregion
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
