@@ -1679,31 +1679,35 @@ namespace RegexTest
 
 		private void Interpret_Click(object sender, System.EventArgs e)
 		{
-			SaveValues();
+		    SaveValues();
 
-			buffer = new RegexBuffer(RegexText.Text);
-			buffer.RegexOptions = CreateRegexOptions();
-			try
-			{
-				RegexExpression exp = new RegexExpression(buffer);
-
-				Output.Text = exp.ToString(0);
-
-			}
-			catch (Exception ex)
-			{
-				if (buffer.ErrorLocation != -1)
-				{
-					RegexText.SelectionStart = buffer.ErrorLocation;
-					RegexText.SelectionLength = buffer.ErrorLength;
-				}
-				Output.Text = 
-					"Error intepreting regex\r\n" + ex.Message;
-				RegexText.Focus();
-			}
+		    AttemptToInterpretRegexAndShowInterpretationOrError();
 		}
 
-		private void Split_Click(object sender, System.EventArgs e)
+	    void AttemptToInterpretRegexAndShowInterpretationOrError()
+	    {
+	        this.buffer = new RegexBuffer(this.RegexText.Text);
+	        this.buffer.RegexOptions = CreateRegexOptions();
+	        try
+	        {
+	            RegexExpression exp = new RegexExpression(this.buffer);
+
+	            this.Output.Text = exp.ToString(0);
+	        }
+	        catch (Exception ex)
+	        {
+	            if (this.buffer.ErrorLocation != -1)
+	            {
+	                this.RegexText.SelectionStart = this.buffer.ErrorLocation;
+	                this.RegexText.SelectionLength = this.buffer.ErrorLength;
+	            }
+	            this.Output.Text =
+	                "Error intepreting regex\r\n" + ex.Message;
+	            this.RegexText.Focus();
+	        }
+	    }
+
+	    private void Split_Click(object sender, System.EventArgs e)
 		{
 			SaveValues();
 			Regex regex = null;
