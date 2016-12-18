@@ -1447,18 +1447,23 @@ namespace RegexTest
 
 		private void button1_Click(object sender, System.EventArgs e)
 		{
-			SaveValues();
-
-			Regex regex = null;
-			if (AnyExceptionsEncounteredWhileCreatingRegexAndTimingTheCreationAndPresentingExceptionsInGUI(ref regex))
-			    return;
-
-			string[] groupNames = regex.GetGroupNames();
-
-			string[] strings = CollectStringsToMatchRegexesAgainst();
-
-		    MatchUserInputStringsAgainstRegexAndPresentGroupMatchesInGUI(strings, regex, groupNames);
+		    SaveValuesAndCreateRegexAndShowGroupMatchesAgainstInputStrings();
 		}
+
+	    void SaveValuesAndCreateRegexAndShowGroupMatchesAgainstInputStrings()
+	    {
+	        SaveValues();
+
+	        Regex regex = null;
+	        if (AnyExceptionsEncounteredWhileCreatingRegexAndTimingTheCreationAndPresentingExceptionsInGUI(ref regex))
+	            return;
+
+	        string[] groupNames = regex.GetGroupNames();
+
+	        string[] strings = CollectStringsToMatchRegexesAgainst();
+
+	        MatchUserInputStringsAgainstRegexAndPresentGroupMatchesInGUI(strings, regex, groupNames);
+	    }
 
 	    void MatchUserInputStringsAgainstRegexAndPresentGroupMatchesInGUI(
 	        string[] strings,
