@@ -1779,13 +1779,10 @@ namespace RegexTest
 
 			if (MatchEvaluator.Checked)
 			{
-				replacer = new ReplaceMatchEvaluator(regex, ReplaceString.Text);
-				string output = replacer.CreateAndLoadClass();
-				if (output != null)
-				{
-					Output.Text = output;
-					return;
-				}
+			    if (!TryCreateReplacerAndReportErrorsInGUI(regex, out replacer))
+			    {
+				    return;
+			    }
 			}
 
 			StringBuilder outString = new StringBuilder();
@@ -1809,6 +1806,19 @@ namespace RegexTest
 			}
 			Output.Text = outString.ToString();
 		}
+
+	    bool TryCreateReplacerAndReportErrorsInGUI(Regex regex, out ReplaceMatchEvaluator replacer)
+	    {
+	        replacer = new ReplaceMatchEvaluator(regex, this.ReplaceString.Text);
+	        string output = replacer.CreateAndLoadClass();
+	        if (output == null)
+	        {
+                return true;
+            }
+
+	        this.Output.Text = output;
+	        return false;
+	    }
 
 	    private void makeAssemblyItem_Click(object sender, System.EventArgs e)
 		{
