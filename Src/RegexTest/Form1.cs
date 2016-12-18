@@ -1773,20 +1773,9 @@ namespace RegexTest
 				return;
 			}
 
-			string[] strings;
-			// if checked, pass all lines as a single block
-			if (OneString.Checked)
-			{
-				strings = new string[1];
-				strings[0] = Strings.Text;
-			}
-			else
-			{
-				strings = Regex.Split(Strings.Text, @"\r\n");
-				//strings = Strings.Text.Split('\n\r');
-			}
+			string[] strings = CollectInputStrings2();
 
-			ReplaceMatchEvaluator replacer = null;
+		    ReplaceMatchEvaluator replacer = null;
 
 			if (MatchEvaluator.Checked)
 			{
@@ -1821,7 +1810,26 @@ namespace RegexTest
 			Output.Text = outString.ToString();
 		}
 
-		private void makeAssemblyItem_Click(object sender, System.EventArgs e)
+	    string[] CollectInputStrings2()
+	    {
+	        string[] strings;
+
+	        // if checked, pass all lines as a single block
+	        if (this.OneString.Checked)
+	        {
+	            strings = new string[1];
+	            strings[0] = this.Strings.Text;
+	        }
+	        else
+	        {
+	            strings = Regex.Split(this.Strings.Text, @"\r\n");
+
+	            //strings = Strings.Text.Split('\n\r');
+	        }
+	        return strings;
+	    }
+
+	    private void makeAssemblyItem_Click(object sender, System.EventArgs e)
 		{
 			MakeAssemblyDialog dialog = new MakeAssemblyDialog();
 			if (dialog.ShowDialog() == DialogResult.OK)
