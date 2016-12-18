@@ -1526,21 +1526,7 @@ namespace RegexTest
 
 	    string[] CollectStringsToMatchRegexesAgainst()
 	    {
-	        string[] strings;
-
-	        // if checked, pass all lines as a single block
-	        if (this.OneString.Checked)
-	        {
-	            strings = new string[1];
-	            strings[0] = this.Strings.Text;
-	        }
-	        else
-	        {
-	            strings = Regex.Split(this.Strings.Text, @"\r\n");
-
-	            //strings = Strings.Text.Split('\n\r');
-	        }
-	        return strings;
+	        return CollectInputStrings();
 	    }
 
 	    bool AnyExceptionsEncounteredWhileCreatingRegexAndTimingTheCreationAndPresentingExceptionsInGUI(ref Regex regex)
