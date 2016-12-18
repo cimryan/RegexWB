@@ -1714,20 +1714,9 @@ namespace RegexTest
 			if (AnyExceptionsEncounteredWhileAttemptingToCreatingRegexAndShowingExceptionsInGUI(ref regex))
 			    return;
 
-			string[] strings;
-			// if checked, pass all lines as a single block
-			if (OneString.Checked)
-			{
-				strings = new string[1];
-				strings[0] = Strings.Text;
-			}
-			else
-			{
-				strings = Regex.Split(Strings.Text, @"\r\n");
-				//strings = Strings.Text.Split('\n\r');
-			}
+			string[] strings = CollectInputStrings();
 
-			StringBuilder outString = new StringBuilder();
+		    StringBuilder outString = new StringBuilder();
 			foreach (string s in strings)
 			{
 				outString.Append(String.Format("Splitting: {0}\r\n", s));			
@@ -1744,6 +1733,25 @@ namespace RegexTest
 			Output.Text = outString.ToString();
 
 		}
+
+	    string[] CollectInputStrings()
+	    {
+	        string[] strings;
+
+	        // if checked, pass all lines as a single block
+	        if (this.OneString.Checked)
+	        {
+	            strings = new string[1];
+	            strings[0] = this.Strings.Text;
+	        }
+	        else
+	        {
+	            strings = Regex.Split(this.Strings.Text, @"\r\n");
+
+	            //strings = Strings.Text.Split('\n\r');
+	        }
+	        return strings;
+	    }
 
 	    bool AnyExceptionsEncounteredWhileAttemptingToCreatingRegexAndShowingExceptionsInGUI(ref Regex regex)
 	    {
