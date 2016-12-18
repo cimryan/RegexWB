@@ -1455,20 +1455,9 @@ namespace RegexTest
 
 			string[] groupNames = regex.GetGroupNames();
 
-			string[] strings;
-				// if checked, pass all lines as a single block
-			if (OneString.Checked)
-			{
-				strings = new string[1];
-				strings[0] = Strings.Text;
-			}
-			else
-			{
-				strings = Regex.Split(Strings.Text, @"\r\n");
-				//strings = Strings.Text.Split('\n\r');
-			}
+			string[] strings = CollectStringsToMatchRegexesAgainst();
 
-			StringBuilder outString = new StringBuilder();
+		    StringBuilder outString = new StringBuilder();
 			foreach (string s in strings)
 			{
 				outString.Append(String.Format("Matching: {0}\r\n", s));
@@ -1520,6 +1509,25 @@ namespace RegexTest
 			}
 			Output.Text = outString.ToString();
 		}
+
+	    string[] CollectStringsToMatchRegexesAgainst()
+	    {
+	        string[] strings;
+
+	        // if checked, pass all lines as a single block
+	        if (this.OneString.Checked)
+	        {
+	            strings = new string[1];
+	            strings[0] = this.Strings.Text;
+	        }
+	        else
+	        {
+	            strings = Regex.Split(this.Strings.Text, @"\r\n");
+
+	            //strings = Strings.Text.Split('\n\r');
+	        }
+	        return strings;
+	    }
 
 	    bool AnyExceptionsEncounteredWhileCreatingRegexAndTimingTheCreationAndPresentingExceptionsInGUI(ref Regex regex)
 	    {
