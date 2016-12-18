@@ -1450,19 +1450,8 @@ namespace RegexTest
 			SaveValues();
 
 			Regex regex = null;
-			try
-			{
-				Counter counter = new Counter();
-				counter.Start();
-				regex = CreateRegex();
-				counter.Stop();
-				this.CompileTime.Text = counter.Seconds.ToString();
-			}
-			catch (Exception ex)
-			{
-				Output.Text = ex.ToString();
-				return;
-			}
+			if (AnyExceptionsEncounteredWhileCreatingRegexAndTimingTheCreationAndPresentingExceptionsInGUI(ref regex))
+			    return;
 
 			string[] groupNames = regex.GetGroupNames();
 
@@ -1532,7 +1521,25 @@ namespace RegexTest
 			Output.Text = outString.ToString();
 		}
 
-		#region SaveRestore
+	    bool AnyExceptionsEncounteredWhileCreatingRegexAndTimingTheCreationAndPresentingExceptionsInGUI(ref Regex regex)
+	    {
+	        try
+	        {
+	            Counter counter = new Counter();
+	            counter.Start();
+	            regex = CreateRegex();
+	            counter.Stop();
+	            this.CompileTime.Text = counter.Seconds.ToString();
+	        }
+	        catch (Exception ex)
+	        {
+	            this.Output.Text = ex.ToString();
+	            return true;
+	        }
+	        return false;
+	    }
+
+	    #region SaveRestore
 
 		private void SaveRegex(string filename)
 		{
