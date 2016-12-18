@@ -1711,15 +1711,8 @@ namespace RegexTest
 		{
 			SaveValues();
 			Regex regex = null;
-			try
-			{
-				regex = CreateRegex();
-			}
-			catch (Exception ex)
-			{
-				Output.Text = ex.ToString();
-				return;
-			}
+			if (AnyExceptionsEncounteredWhileAttemptingToCreatingRegexAndShowingExceptionsInGUI(ref regex))
+			    return;
 
 			string[] strings;
 			// if checked, pass all lines as a single block
@@ -1752,7 +1745,21 @@ namespace RegexTest
 
 		}
 
-		private void Replace_Click(object sender, System.EventArgs e)
+	    bool AnyExceptionsEncounteredWhileAttemptingToCreatingRegexAndShowingExceptionsInGUI(ref Regex regex)
+	    {
+	        try
+	        {
+	            regex = CreateRegex();
+	        }
+	        catch (Exception ex)
+	        {
+	            this.Output.Text = ex.ToString();
+	            return true;
+	        }
+	        return false;
+	    }
+
+	    private void Replace_Click(object sender, System.EventArgs e)
 		{
 			SaveValues();
 			Regex regex = null;
