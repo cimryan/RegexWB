@@ -1637,20 +1637,25 @@ namespace RegexTest
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
-			string filename = 
-				String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\regex.xml");
+			AttemptToLoadPersistedRegex();
 
-			if (File.Exists(filename))
-			{
-				LoadRegex(filename);
-			}
-
-			Graphics g = Graphics.FromHwnd(this.Handle);
+		    Graphics g = Graphics.FromHwnd(this.Handle);
 			this.characterSize = g.MeasureString(RegexText.Text, RegexText.Font);
 			this.characterSize.Width /= RegexText.Text.Length;
 		}
 
-		// Go from commented regex version to non-commented version
+	    void AttemptToLoadPersistedRegex()
+	    {
+	        string filename =
+	            String.Format(Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\regex.xml");
+
+	        if (File.Exists(filename))
+	        {
+	            LoadRegex(filename);
+	        }
+	    }
+
+	    // Go from commented regex version to non-commented version
 		private string RemoveWhitespace(string regexString)
 		{
 			if (!this.IgnoreWhitespace.Checked)
