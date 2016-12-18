@@ -1702,23 +1702,29 @@ namespace RegexTest
 
 			string[] strings = CollectInputStrings();
 
-		    StringBuilder outString = new StringBuilder();
-			foreach (string s in strings)
-			{
-				outString.Append(String.Format("Splitting: {0}\r\n", s));			
-
-				string[] arr = regex.Split(s);
-
-				int index = 0;
-				foreach (string split in arr)
-				{
-					outString.Append(String.Format("    [{0}] => {1}\r\n", index, split));
-					index++;
-				}
-			}
-			Output.Text = outString.ToString();
+		    StringBuilder outString = SplitEachInputStringIntoThePartsThatMatchTheGroupsInTheRegexAndFormatTheSplittingForTheGUI(strings, regex);
+		    Output.Text = outString.ToString();
 
 		}
+
+	    static StringBuilder SplitEachInputStringIntoThePartsThatMatchTheGroupsInTheRegexAndFormatTheSplittingForTheGUI(string[] strings, Regex regex)
+	    {
+	        StringBuilder outString = new StringBuilder();
+	        foreach (string s in strings)
+	        {
+	            outString.Append(String.Format("Splitting: {0}\r\n", s));
+
+	            string[] arr = regex.Split(s);
+
+	            int index = 0;
+	            foreach (string split in arr)
+	            {
+	                outString.Append(String.Format("    [{0}] => {1}\r\n", index, split));
+	                index++;
+	            }
+	        }
+	        return outString;
+	    }
 
 	    string[] CollectInputStrings()
 	    {
