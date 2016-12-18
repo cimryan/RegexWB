@@ -1773,7 +1773,7 @@ namespace RegexTest
 				return;
 			}
 
-			string[] strings = CollectInputStrings2();
+			string[] strings = CollectInputStrings();
 
 		    ReplaceMatchEvaluator replacer = null;
 
@@ -1809,25 +1809,6 @@ namespace RegexTest
 			}
 			Output.Text = outString.ToString();
 		}
-
-	    string[] CollectInputStrings2()
-	    {
-	        string[] strings;
-
-	        // if checked, pass all lines as a single block
-	        if (this.OneString.Checked)
-	        {
-	            strings = new string[1];
-	            strings[0] = this.Strings.Text;
-	        }
-	        else
-	        {
-	            strings = Regex.Split(this.Strings.Text, @"\r\n");
-
-	            //strings = Strings.Text.Split('\n\r');
-	        }
-	        return strings;
-	    }
 
 	    private void makeAssemblyItem_Click(object sender, System.EventArgs e)
 		{
