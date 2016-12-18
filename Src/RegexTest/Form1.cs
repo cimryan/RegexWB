@@ -1637,12 +1637,17 @@ namespace RegexTest
 
 		private void Form1_Load(object sender, System.EventArgs e)
 		{
-			AttemptToLoadPersistedRegex();
+		    AttemptToLoadPersistedRegex();
 
-		    Graphics g = Graphics.FromHwnd(this.Handle);
-			this.characterSize = g.MeasureString(RegexText.Text, RegexText.Font);
-			this.characterSize.Width /= RegexText.Text.Length;
+		    InitializeCharacterSize();
 		}
+
+	    void InitializeCharacterSize()
+	    {
+	        Graphics g = Graphics.FromHwnd(this.Handle);
+	        this.characterSize = g.MeasureString(this.RegexText.Text, this.RegexText.Font);
+	        this.characterSize.Width /= this.RegexText.Text.Length;
+	    }
 
 	    void AttemptToLoadPersistedRegex()
 	    {
