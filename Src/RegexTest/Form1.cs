@@ -1470,6 +1470,12 @@ namespace RegexTest
 	        Regex regex,
 	        string[] groupNames)
 	    {
+	        StringBuilder outString = GetFormmattedDescriptionOfGroupMatchesForUserInputStrings(strings, regex, groupNames);
+	        this.Output.Text = outString.ToString();
+	    }
+
+	    StringBuilder GetFormmattedDescriptionOfGroupMatchesForUserInputStrings(string[] strings, Regex regex, string[] groupNames)
+	    {
 	        StringBuilder outString = new StringBuilder();
 	        foreach (string s in strings)
 	        {
@@ -1521,7 +1527,7 @@ namespace RegexTest
 	                outString.Append("    No Match\r\n");
 	            }
 	        }
-	        this.Output.Text = outString.ToString();
+	        return outString;
 	    }
 
 	    string[] CollectStringsToMatchRegexesAgainst()
