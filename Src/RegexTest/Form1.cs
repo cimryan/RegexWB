@@ -1479,55 +1479,60 @@ namespace RegexTest
 	        StringBuilder outString = new StringBuilder();
 	        foreach (string s in strings)
 	        {
-	            outString.Append(String.Format("Matching: {0}\r\n", s));
-
-	            this.Elapsed.Text = "";
-	            int iterations = Convert.ToInt32(this.Iterations.Text);
-	            Counter counter = new Counter();
-	            counter.Start();
-	            Match m = null;
-	            for (int i = 0; i < iterations; i++)
-	            {
-	                m = regex.Match(s);
-	                while (m.Success)
-	                {
-	                    m = m.NextMatch();
-	                }
-	            }
-	            counter.Stop();
-	            this.Elapsed.Text = String.Format("{0:f2}", counter.Seconds);
-
-	            m = regex.Match(s);
-	            bool noMatch = true;
-	            while (m.Success)
-	            {
-	                noMatch = false;
-	                GroupCollection groups = m.Groups;
-
-	                int groupNumber = 0;
-	                foreach (Group group in m.Groups)
-	                {
-	                    foreach (Capture capture in @group.Captures)
-	                    {
-	                        if ((this.HideGroupZero.Checked == false) ||
-	                            (groupNames[groupNumber] != "0"))
-	                        {
-	                            outString.Append(String.Format("    {0} => {1}\r\n", groupNames[groupNumber], capture));
-	                        }
-
-	                        //CaptureCollection c = group.Captures;
-	                    }
-	                    groupNumber++;
-	                }
-
-	                m = m.NextMatch();
-	            }
-	            if (noMatch)
-	            {
-	                outString.Append("    No Match\r\n");
-	            }
+	            GetFormmattedDescriptionOfGroupMatchesForUserInputString(regex, groupNames, outString, s);
 	        }
 	        return outString;
+	    }
+
+	    void GetFormmattedDescriptionOfGroupMatchesForUserInputString(Regex regex, string[] groupNames, StringBuilder outString, string s)
+	    {
+	        outString.Append(String.Format("Matching: {0}\r\n", s));
+
+	        this.Elapsed.Text = "";
+	        int iterations = Convert.ToInt32(this.Iterations.Text);
+	        Counter counter = new Counter();
+	        counter.Start();
+	        Match m = null;
+	        for (int i = 0; i < iterations; i++)
+	        {
+	            m = regex.Match(s);
+	            while (m.Success)
+	            {
+	                m = m.NextMatch();
+	            }
+	        }
+	        counter.Stop();
+	        this.Elapsed.Text = String.Format("{0:f2}", counter.Seconds);
+
+	        m = regex.Match(s);
+	        bool noMatch = true;
+	        while (m.Success)
+	        {
+	            noMatch = false;
+	            GroupCollection groups = m.Groups;
+
+	            int groupNumber = 0;
+	            foreach (Group group in m.Groups)
+	            {
+	                foreach (Capture capture in @group.Captures)
+	                {
+	                    if ((this.HideGroupZero.Checked == false) ||
+	                        (groupNames[groupNumber] != "0"))
+	                    {
+	                        outString.Append(String.Format("    {0} => {1}\r\n", groupNames[groupNumber], capture));
+	                    }
+
+	                    //CaptureCollection c = group.Captures;
+	                }
+	                groupNumber++;
+	            }
+
+	            m = m.NextMatch();
+	        }
+	        if (noMatch)
+	        {
+	            outString.Append("    No Match\r\n");
+	        }
 	    }
 
 	    string[] CollectStringsToMatchRegexesAgainst()
